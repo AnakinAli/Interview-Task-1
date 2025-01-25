@@ -1,0 +1,12 @@
+#!/bin/sh
+
+UPDATED_FILES=$(git diff --name-only --cached --diff-filter=ACMRTUXB | xargs)
+PHP_VERSION=$(head -1 .phprc)
+$PHP_VERSION /usr/local/bin/composer lint $UPDATED_FILES
+npx prettier $UPDATED_FILES --write
+git add $UPDATED_FILES
+if [ -f ./.git/hooks/pre-commit ]; then
+	./.git/hooks/pre-commit $@
+fi
+
+exit 0 # do commit

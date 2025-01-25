@@ -1,0 +1,10 @@
+#!/bin/sh
+PHP_VERSION=$(head -1 .phprc)
+
+$PHP_VERSION artisan env:keys-check  --auto-add=none
+
+if [ -f ./.git/hooks/pre-push ]; then
+	./.git/hooks/pre-push $@
+fi
+
+exit 0

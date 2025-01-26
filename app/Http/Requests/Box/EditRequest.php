@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Box;
 
 use App\Services\BoxService;
@@ -21,19 +23,20 @@ class EditRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
+    protected function failedValidation(Validator $validator): void
     {
         if ($validator->errors()->has('url')) {
             $this->redirect = $this->url;
         }
+
         parent::failedValidation($validator);
     }
 
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'id'  => $this->box,
-            'url' => app(BoxService::class)->getUrl($this->box),
+            'id'  => $box = $this->route('box'),
+            'url' => app(BoxService::class)->getUrl($box),
         ]);
     }
 }

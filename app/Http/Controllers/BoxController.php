@@ -2,40 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\BoxService;
-use Illuminate\Http\Request;
+use App\Classes\PrepareBoxesControllerData;
+use App\Http\Requests\Box\EditRequest;
+use App\Http\Requests\Box\UpdateRequest;
 
 class BoxController extends Controller
 {
-    private BoxService $boxService;
+    private PrepareBoxesControllerData $prepareBoxes;
 
-    private string $headTitle;
-
-    public function __construct(BoxService $boxService)
+    public function __construct(PrepareBoxesControllerData $prepareBoxes)
     {
-        $this->boxService = $boxService;
-        $this->headTitle  = config('app.name') . ' | ' . 'Boxes';
+        $this->prepareBoxes = $prepareBoxes;
     }
 
     public function index()
     {
-        return view('pages.boxes.index', [
-            'title' => $this->headTitle,
-            'boxes' => $this->boxService->findBoxes(),
-        ]);
+        return view('pages.boxes.index', $this->prepareBoxes->index());
     }
 
-    public function edit(string $id)
+    public function edit(EditRequest $request)
     {
-        dd($this->boxService->findBoxes(['id' => $id]));
-
-        return view('pages.boxes.edit', [
-            'title' => $this->headTitle . ' - ' . 'Edit',
-            'box'   => $this->boxService->findBoxes(['id' => $id]),
-        ]);
+        return view('pages.boxes.edit', $this->prepareBoxes->edit($request->validated(), $request->session()->get('success')));
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request)
     {
+        return to_route('box.edit', ['box' => $request->validated('id')])
+            ->with('success', $this->prepareBoxes->update($request->validated()));
     }
 }

@@ -20,7 +20,7 @@ jobs:
         run: cp .env.example .env
 
       - name: Install Dependencies
-        run: composer install --optimize-autoloader --no-interaction --prefer-dist --no-dev
+        run: composer install --no-interaction
 
       - name: Set Up Node.js
         uses: actions/setup-node@v3
@@ -34,3 +34,5 @@ jobs:
 
       - name: Generate Key
         run: php artisan key:generate
+      - name: Validate Formatting
+        run: composer validate-fixer

@@ -2,31 +2,28 @@
 
 namespace App\Services;
 
-use App\Models\Box;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use App\Repositories\BoxRepository;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class BoxService
 {
-    private Builder $boxModelBuilder;
+    private BoxRepository $boxRepository;
 
-    public function __construct(Box $boxModel)
+    public function __construct(BoxRepository $boxRepository)
     {
-        $this->boxModelBuilder = $boxModel->newQuery();
+        $this->boxRepository = $boxRepository;
     }
 
-    public function updateOrCreate(array $data): Box
+    public function update(array $data): string
     {
-        return $this->boxModelBuilder->updateOrCreate($data);
+        $this->boxRepository->updateOrCreate(['id' => $data['id']], [...Arr::except($data, 'id')]);
+
+        return __('Box updated successfully.');
     }
 
-    public function findBoxes(array $filter = [], array $only = ['id', 'title', 'url', 'color']): array
+    public function findBoxes(array $filter = [], array $only = ['id', 'title', 'url', 'color']): Collection
     {
-        return $this->filterBoxes($filter, $only)->toArray();
-    }
-
-    private function filterBoxes(array $filter, array $only): Collection
-    {
-        return $this->boxModelBuilder->where($filter)->select($only)->get();
+        return $this->boxRepository->filterBoxes($filter, $only)->get();
     }
 }

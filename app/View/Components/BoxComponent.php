@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use App\Classes\Colors;
+use App\Enums\Colors;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;

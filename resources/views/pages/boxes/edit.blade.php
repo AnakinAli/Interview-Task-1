@@ -8,8 +8,6 @@
     <div class="p-12 w-full border-gray-300 flex justify-center">
         <div class="w-[400px]">
             <form method="POST" action="{{ route('box.update', [ 'box' => $box->id ]) }}">
-                <x-auth-session-status :status="$status" class="p-6 text-center text-lg font-bold"/>
-
                 @csrf
                 @method('put')
 
@@ -41,7 +39,7 @@
                     <div class="grid grid-cols-6 gap-4 items-center">
                         <x-input-label for="color" class="col-span-1" :value="__('Color')"/>
 
-                        <select id="countries" name="color" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 col-span-5">
+                        <select id="countries" name="color" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-xs block mt-1 col-span-5">
                             <option selected>Choose a Color</option>
                             @foreach($colors as $color)
                                 <option value="{{ $color->value }}">{{ $color->name }}</option>

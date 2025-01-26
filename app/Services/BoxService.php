@@ -22,6 +22,11 @@ class BoxService
         return __('Box updated successfully.');
     }
 
+    public function getUrl(int $id): ?string
+    {
+        return $this->findBoxes(['id' => $id])->first()->url;
+    }
+
     public function findBoxes(array $filter = [], array $only = ['id', 'title', 'url', 'color']): Collection
     {
         return $this->boxRepository->filterBoxes($filter, $only)->get();

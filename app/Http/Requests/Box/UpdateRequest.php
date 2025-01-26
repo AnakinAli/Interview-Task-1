@@ -19,7 +19,7 @@ class UpdateRequest extends FormRequest
             'id'    => ['required', 'exists:boxes,id'],
             'color' => ['required', 'string', Rule::in(app(AvailableColors::class)->colors())],
             'url'   => ['required', 'string', 'url', 'max:255', Rule::unique('boxes', 'url')],
-            'title' => ['required', 'string', 'min:3', 'max:255', Rule::unique('boxes', 'title')],
+            'title' => ['required', 'string', 'min:3', 'max:255'],
         ];
     }
 

@@ -19,21 +19,21 @@ class PrepareBoxesControllerData
         $this->availableColors = $availableColors;
     }
 
-    public function index(): array
+    public function index(string $status = null): array
     {
         return [
-            'title' => $this->indexTitle,
-            'boxes' => $this->boxService->findBoxes(),
+            'title'  => $this->indexTitle,
+            'boxes'  => $this->boxService->findBoxes(),
+            'status' => $status,
         ];
     }
 
-    public function edit(array $validatedData, string $status = null): array
+    public function edit(array $validatedData): array
     {
         return [
             'title'  => $this->indexTitle . ' - ' . __('Edit'),
             'box'    => $this->boxService->findBoxes($validatedData)->first(),
             'colors' => $this->availableColors->colors(),
-            'status' => $status,
         ];
     }
 

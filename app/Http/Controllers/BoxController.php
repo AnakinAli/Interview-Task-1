@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\PrepareBoxesControllerData;
 use App\Http\Requests\Box\EditRequest;
 use App\Http\Requests\Box\UpdateRequest;
+use Illuminate\Http\Request;
 
 class BoxController extends Controller
 {
@@ -15,19 +16,19 @@ class BoxController extends Controller
         $this->prepareBoxes = $prepareBoxes;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages.boxes.index', $this->prepareBoxes->index());
+        return view('pages.boxes.index', $this->prepareBoxes->index($request->session()->get('status')));
     }
 
     public function edit(EditRequest $request)
     {
-        return view('pages.boxes.edit', $this->prepareBoxes->edit($request->validated(), $request->session()->get('success')));
+        return view('pages.boxes.edit', $this->prepareBoxes->edit($request->validated()));
     }
 
     public function update(UpdateRequest $request)
     {
-        return to_route('box.edit', ['box' => $request->validated('id')])
-            ->with('success', $this->prepareBoxes->update($request->validated()));
+        return to_route('box.index', ['box' => $request->validated('id')])
+            ->with('status', $this->prepareBoxes->update($request->validated()));
     }
 }

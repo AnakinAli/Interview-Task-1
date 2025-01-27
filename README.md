@@ -1,6 +1,6 @@
 # Project Setup and Development Guide
 
-This document provides instructions for setting up, developing, and deploying the project. Follow these steps to ensure smooth configuration and execution.
+This document provides instructions for setting up the project. Follow these steps to ensure smooth configuration and execution.
 
 ---
 
@@ -18,18 +18,23 @@ The command `php artisan admin:create` allows you to create an admin user with d
     php artisan admin:create
     ```
 
+    The default user will be created with the following data:
+
     - Name: `admin`
     - Email: `admin@admin.com`
     - Password: `secret`
 
 - **Custom Data**:  
-  Replace the placeholder values (`name`, `email`, and `password`) as needed:
+  You can provide custom values for the name, email, and password using the following syntax:
+
     ```bash
     php artisan admin:create --name=<name> --email=<email> --password=<password>
     ```
+
     Example:
+
     ```bash
-    php artisan admin:create --name=admin --email=admin@admin.com --password=64
+    php artisan admin:create --name=admin --email=admin@admin.com --password=secret
     ```
 
 ---
@@ -38,25 +43,30 @@ The command `php artisan admin:create` allows you to create an admin user with d
 
 ### Requirements:
 
-Ensure you have **Node.js v22.12.0** and **nvm** installed.
+Ensure you have **Node.js v22.12.0** or **nvm** installed.
 
 ### Steps to Build:
 
-1. Switch to the required Node.js version:
+1. **Switch to the required Node.js version**:
+
+    If you have `nvm` installed, use the following command to switch to the correct version:
 
     ```bash
     nvm use
     ```
 
-    If not installed, install it using:
+    If `nvm` is not installed, install it using:
 
     ```bash
     nvm install 22.12.0
     ```
 
-    More details: [nvm installation guide](https://github.com/nvm-sh/nvm).
+    For further details, visit the [nvm installation guide](https://github.com/nvm-sh/nvm).
 
-2. Install dependencies and build:
+2. **Install dependencies and build**:
+
+    To install the required dependencies and build the project, run:
+
     ```bash
     npm ci && npm run build
     ```
@@ -65,7 +75,7 @@ Ensure you have **Node.js v22.12.0** and **nvm** installed.
 
 ## Alternative Build Method
 
-If you're using a normal Node.js environment:
+If you're using a standard Node.js environment without `nvm`, run the following commands:
 
 ```bash
 npm ci && npm run build
@@ -87,7 +97,23 @@ npm ci && npm run build
 
 ---
 
-## Notes
+## Additional Notes
 
 - Ensure your environment matches the specified versions and tools to avoid compatibility issues.
-- Follow the [Vagrant](https://developer.hashicorp.com/vagrant) and [Docker](https://www.docker.com/) guidelines for further assistance with setting up virtualized environments.
+- To load the database with initial data, run:
+
+    ```bash
+    php artisan db:seed
+    ```
+
+- There are tests written in [Pest](https://pestphp.com/) to validate the application's logic.
+- In the `.env.example` file, the `BOX_INITIAL_COUNT` is preset to `9`.
+
+---
+
+## Tools and Versions:
+
+- **Node.js**: v22.12.0
+- **TailwindCSS**: v4.0
+- **PHP**: 8.3 with MongoDB support
+- **Vagrant** and **Docker**: For environment setup

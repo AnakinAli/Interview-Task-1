@@ -10,6 +10,6 @@ class BoxSeeder extends Seeder
     public function run(): void
     {
         $count = config('box.initial_count');
-        Box::factory($count)->default()->create();
+        Box::factory()->count($count)->default()->create();
     }
 }

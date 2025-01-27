@@ -39,8 +39,7 @@
                     <div class="grid grid-cols-6 gap-4 items-center">
                         <x-input-label for="color" class="col-span-1" :value="__('Color')"/>
 
-                        <select id="countries" name="color" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-xs block mt-1 col-span-5">
-                            <option selected>{{ __('Choose a Color') }}</option>
+                        <select required id="countries" name="color" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-xs block mt-1 col-span-5">
                             @foreach($colors as $color)
                                 <option value="{{ $color->value }}">{{ $color->name }}</option>
                             @endforeach

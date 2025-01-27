@@ -34,5 +34,9 @@ jobs:
 
       - name: Generate Key
         run: php artisan key:generate
+
       - name: Validate Formatting
         run: composer validate-fixer
+
+      - name: Run Back-End Tests
+        run: php artisan test

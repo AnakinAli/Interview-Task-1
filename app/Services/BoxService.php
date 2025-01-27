@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Repositories\BoxRepository;
@@ -22,9 +24,11 @@ class BoxService
         return __('Box updated successfully.');
     }
 
-    public function getUrl(int $id): ?string
+    public function getUrl(string $id): ?string
     {
-        return $this->findBoxes(['id' => $id])->first()->url;
+        $box = $this->findBoxes(['id' => $id])->first();
+
+        return $box ? $box->url : null;
     }
 
     public function findBoxes(array $filter = [], array $only = ['id', 'title', 'url', 'color']): Collection

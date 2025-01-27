@@ -1,34 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use App\Classes\PrepareBoxesControllerData;
+use App\Enums\Colors;
 use App\Http\Requests\Box\EditRequest;
 use App\Http\Requests\Box\UpdateRequest;
+use App\Services\BoxService;
 use Illuminate\Http\Request;
 
 class BoxController extends Controller
 {
-    private PrepareBoxesControllerData $prepareBoxes;
+    private string $indexTitle;
 
-    public function __construct(PrepareBoxesControllerData $prepareBoxes)
+    private BoxService $boxService;
+
+    public function __construct(BoxService $boxService)
     {
-        $this->prepareBoxes = $prepareBoxes;
+        $this->indexTitle = config('app.name') . ' | ' . __('Boxes');
+        $this->boxService = $boxService;
     }
 
     public function index(Request $request)
     {
-        return view('pages.boxes.index', $this->prepareBoxes->index($request->session()->get('status')));
+        return view('pages.boxes.index', [
+            'title'  => $this->indexTitle,
+            'boxes'  => $this->boxService->findBoxes(),
+            'status' => $request->session()->get('status'),
+        ]);
     }
 
     public function edit(EditRequest $request)
     {
-        return view('pages.boxes.edit', $this->prepareBoxes->edit($request->validated()));
+        return view('pages.boxes.edit', [
+            'title'  => $this->indexTitle . ' - ' . __('Edit'),
+            'box'    => $this->boxService->findBoxes($request->validated())->first(),
+            'colors' => [Colors::BLUE, Colors::GREEN, Colors::RED],
+        ]);
     }
 
     public function update(UpdateRequest $request)
     {
-        return to_route('box.index', ['box' => $request->validated('id')])
-            ->with('status', $this->prepareBoxes->update($request->validated()));
+        return to_route('box.index')
+            ->with('status', $this->boxService->update($request->validated()));
     }
 }

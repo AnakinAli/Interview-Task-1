@@ -7,7 +7,7 @@
 
     <div class="p-12 w-full">
         <div>
-            <x-auth-session-status :status="$status" class="p-6 text-center text-lg font-bold"/>
+            <x-auth-session-status :status="$status" class="p-6 text-center"/>
         </div>
         <div class="flex justify-center">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">

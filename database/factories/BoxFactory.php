@@ -10,8 +10,8 @@ class BoxFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->title,
-            'url'   => fake()->url,
+            'title' => fake()->company(),
+            'url'   => fake()->url(),
             'color' => fake()->randomElement([Colors::BLUE, Colors::GREEN, Colors::RED]),
         ];
     }

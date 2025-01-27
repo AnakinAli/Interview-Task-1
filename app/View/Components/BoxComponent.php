@@ -27,6 +27,21 @@ class BoxComponent extends Component
         $this->url     = $url;
     }
 
+    public function isRed(): bool
+    {
+        return $this->color === Colors::RED;
+    }
+
+    public function isBlue(): bool
+    {
+        return $this->color === Colors::BLUE;
+    }
+
+    public function isGreen(): bool
+    {
+        return $this->color === Colors::GREEN;
+    }
+
     public function render(): View|Closure|string
     {
         return view('components.box-component');

@@ -9,10 +9,12 @@ class PreventSameSiteRedirectRule implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $pattern = '/\b(box|\'' . parse_url(config('app.url'), PHP_URL_HOST) . '\'|edit|update)\b/i';
+        $domain = parse_url(config('app.url'), PHP_URL_HOST);
+
+        $pattern = '/\b(' . $domain . '|edit|update)\b/i';
 
         if (preg_match($pattern, $value)) {
-            $fail(__('Box url should not contain: ' . config('app.url') . ' or box or edit or update.'));
+            $fail(__('Box url should not contain: ' . $domain . ' or edit or update.'));
         }
     }
 }

@@ -110,6 +110,6 @@ it('prevents updating a box url to box.edit or box.update', function () {
     // Assert
     $response->assertRedirect(route('box.edit', ['box' => $box]));
     $response->assertSessionHasErrors([
-        'url' => __('Box url should not contain: ' . config('app.url') . ' or box or edit or update.'),
+        'url' => __('Box url should not contain: ' . parse_url(config('app.url'), PHP_URL_HOST) . ' or edit or update.'),
     ]);
 });
